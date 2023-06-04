@@ -54,86 +54,86 @@ public class Program
     }
 
     public async Task GenerateReport()
-{
-    var asientos = await _asientosCollection.Find(new BsonDocument()).ToListAsync();
-    
-    if (asientos.Count == 0)
     {
-        Console.WriteLine("No hay asientos para generar el reporte.");
-        return;
-    }
-    
-    using (XmlWriter writer = XmlWriter.Create("asientos.xml"))
-    {
-        writer.WriteStartDocument();
-        writer.WriteStartElement("AsientoActivos");
+        var asientos = await _asientosCollection.Find(new BsonDocument()).ToListAsync();
 
-        if (asientos.Count > 0)
+        if (asientos.Count == 0)
         {
-            var firstAsiento = asientos[0];
-            writer.WriteStartElement("Encabezado");
-            if (firstAsiento.NumeroAsiento.HasValue)
+            Console.WriteLine("No hay asientos para generar el reporte.");
+            return;
+        }
+
+        using (XmlWriter writer = XmlWriter.Create("asientos.xml"))
+        {
+            writer.WriteStartDocument();
+            writer.WriteStartElement("AsientoActivos");
+
+            if (asientos.Count > 0)
+            {
+                var firstAsiento = asientos[0];
+                writer.WriteStartElement("Encabezado");
+                if (firstAsiento.NumeroAsiento.HasValue)
                 {
                     writer.WriteElementString("NumeroAsiento", firstAsiento.NumeroAsiento.Value.ToString());
                 }
-            if (firstAsiento.DescripcionAsiento != null)
+                if (!string.IsNullOrEmpty(firstAsiento.DescripcionAsiento))
                 {
                     writer.WriteElementString("DescripcionAsiento", firstAsiento.DescripcionAsiento);
                 }
-            writer.WriteElementString("FechaAsiento", firstAsiento.FechaAsiento.ToString("yyyy-MM-dd"));
-            writer.WriteEndElement();
-        }
+                writer.WriteElementString("FechaAsiento", firstAsiento.FechaAsiento.ToString("yyyy-MM-dd"));
+                writer.WriteEndElement();
+            }
 
-        foreach (var asiento in asientos)
-        {
-            writer.WriteStartElement("Cuentas");
-            if (asiento.Codigo != null)
+            foreach (var asiento in asientos)
+            {
+                writer.WriteStartElement("Cuentas");
+                if (!string.IsNullOrEmpty(asiento.Codigo))
                 {
                     writer.WriteElementString("Código", asiento.Codigo);
                 }
-            if (asiento.Nombre != null)
+                if (!string.IsNullOrEmpty(asiento.Nombre))
                 {
                     writer.WriteElementString("Nombre", asiento.Nombre);
                 }
-            if (asiento.Cuenta != null)
+                if (!string.IsNullOrEmpty(asiento.Cuenta))
                 {
                     writer.WriteElementString("Cuenta", asiento.Cuenta);
                 }
-            if (asiento.TipoMovimiento != null)
+                if (!string.IsNullOrEmpty(asiento.TipoMovimiento))
                 {
                     writer.WriteElementString("TipoMovimiento", asiento.TipoMovimiento);
                 }
-            if (asiento.Monto != null)
+                if (asiento.Monto != 0)
                 {
                     writer.WriteElementString("Monto", asiento.Monto.ToString("F2"));
                 }
+                writer.WriteEndElement();
+            }
+
             writer.WriteEndElement();
+            writer.WriteEndDocument();
         }
-        
-        writer.WriteEndElement();
-        writer.WriteEndDocument();
+
+        Console.WriteLine("Archivo XML generado de forma satisfactoria.");
     }
-    
-    Console.WriteLine("Archivo XML generado de forma satisfactoria.");
-}
 
     public async Task ProcessInputFile()
     {
         string xmlFilePath = "asientos.xml";
         XDocument xmlDoc = XDocument.Load(xmlFilePath);
 
-        int numeroAsiento = int.Parse(xmlDoc.Root.Element("Encabezado").Element("NumeroAsiento").Value);
-        var descripcionAsiento = xmlDoc.Root.Element("Encabezado").Element("DescripcionAsiento").Value;
-        var fechaAsiento = DateTime.Parse(xmlDoc.Root.Element("Encabezado").Element("FechaAsiento").Value);
+        int? numeroAsiento = int.Parse(xmlDoc.Root.Element("Encabezado")?.Element("NumeroAsiento")?.Value ?? throw new InvalidOperationException("Missing 'NumeroAsiento' element."));
+        var descripcionAsiento = xmlDoc.Root.Element("Encabezado")?.Element("DescripcionAsiento")?.Value ?? throw new InvalidOperationException("Missing 'DescripcionAsiento' element.");
+        var fechaAsiento = DateTime.Parse(xmlDoc.Root.Element("Encabezado")?.Element("FechaAsiento")?.Value ?? throw new InvalidOperationException("Missing 'FechaAsiento' element."));
         var cuentas = xmlDoc.Root.Elements("Cuentas");
 
         foreach (var cuenta in cuentas)
         {
-            var codigo = cuenta.Element("Código").Value;
-            var nombre = cuenta.Element("Nombre").Value;
-            var cuentaAcc = cuenta.Element("Cuenta").Value;
-            var tipoMovimiento = cuenta.Element("TipoMovimiento").Value;
-            var monto = decimal.Parse(cuenta.Element("Monto").Value);
+            var codigo = cuenta.Element("Código")?.Value ?? throw new InvalidOperationException("Missing 'Código' element.");
+            var nombre = cuenta.Element("Nombre")?.Value ?? throw new InvalidOperationException("Missing 'Nombre' element.");
+            var cuentaAcc = cuenta.Element("Cuenta")?.Value ?? throw new InvalidOperationException("Missing 'Cuenta' element.");
+            var tipoMovimiento = cuenta.Element("TipoMovimiento")?.Value ?? throw new InvalidOperationException("Missing 'TipoMovimiento' element.");
+            var monto = decimal.Parse(cuenta.Element("Monto")?.Value ?? throw new InvalidOperationException("Missing 'Monto' element."));
 
             AsientoDB newAsiento = new AsientoDB()
             {
@@ -149,9 +149,9 @@ public class Program
 
             await _asientosInputCollection.InsertOneAsync(newAsiento);
         }
+
         Console.WriteLine("Datos insertados en la colección 'asientos_input' con éxito.");
     }
-
 
     public async Task ShowMenu()
     {
