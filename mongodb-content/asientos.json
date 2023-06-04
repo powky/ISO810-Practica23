@@ -1,0 +1,55 @@
+[{
+  "siting": 1,
+  "desc": "ASIENTO CONTABLE 0378",
+  "date": "2023-01-12",
+  "code": "0378",
+  "name": "DEPOSITO TRABAJO A",
+  "acc": "000800125940",
+  "movement": "CR",
+  "amount": 80000.00
+},{
+  "siting": 2,
+  "desc": "ASIENTO CONTABLE 0378",
+  "date": "2023-01-12",
+  "code": "0378",
+  "name": "PAGO TRABAJO B",
+  "acc": "000800125940",
+  "movement": "DB",
+  "amount": 50000.00
+},{
+  "siting": 3,
+  "desc": "ASIENTO CONTABLE 0378",
+  "date": "2023-01-12",
+  "code": "0378",
+  "name": "DEPOSITO TRABAJO C",
+  "acc": "000800125940",
+  "movement": "CR",
+  "amount": 74500.00
+},{
+  "siting": 4,
+  "desc": "ASIENTO CONTABLE 0378",
+  "date": "2023-01-12",
+  "code": "0378",
+  "name": "PAGO TRABAJO D",
+  "acc": "000800125940",
+  "movement": "CR",
+  "amount": 94000.00
+},{
+  "siting": 5,
+  "desc": "ASIENTO CONTABLE 0378",
+  "date": "2023-01-12",
+  "code": "0378",
+  "name": "PAGO TRABAJO E",
+  "acc": "000800125940",
+  "movement": "CR",
+  "amount": 50000.00
+},{
+  "siting": 6,
+  "desc": "ASIENTO CONTABLE 0378",
+  "date": "2023-01-12",
+  "code": "0378",
+  "name": "DEPOSITO TRABAJO F",
+  "acc": "000800125940",
+  "movement": "CR",
+  "amount": 7000.00
+}]

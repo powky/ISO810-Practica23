@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<AsientoActivos>
+    <Encabezado>
+        <NumeroAsiento>1</NumeroAsiento>
+        <DescripcionAsiento>ASIENTO CONTABLE 0378</DescripcionAsiento>
+        <FechaAsiento>2023-01-12</FechaAsiento>
+    </Encabezado>
+    <Cuentas>
+        <Código>0378</Código>
+        <Nombre>DEPOSITO TRABAJO A</Nombre>
+        <Cuenta>000800125940</Cuenta>
+        <TipoMovimiento>CR</TipoMovimiento>
+        <Monto>80000.00</Monto>
+    </Cuentas>
+    <Cuentas>
+        <Código>0378</Código>
+        <Nombre>PAGO TRABAJO B</Nombre>
+        <Cuenta>000800125940</Cuenta>
+        <TipoMovimiento>DB</TipoMovimiento>
+        <Monto>50000.00</Monto>
+    </Cuentas>
+    <Cuentas>
+        <Código>0378</Código>
+        <Nombre>DEPOSITO TRABAJO C</Nombre>
+        <Cuenta>000800125940</Cuenta>
+        <TipoMovimiento>CR</TipoMovimiento>
+        <Monto>74500.00</Monto>
+    </Cuentas>
+    <Cuentas>
+        <Código>0378</Código>
+        <Nombre>PAGO TRABAJO D</Nombre>
+        <Cuenta>000800125940</Cuenta>
+        <TipoMovimiento>CR</TipoMovimiento>
+        <Monto>94000.00</Monto>
+    </Cuentas>
+    <Cuentas>
+        <Código>0378</Código>
+        <Nombre>PAGO TRABAJO E</Nombre>
+        <Cuenta>000800125940</Cuenta>
+        <TipoMovimiento>CR</TipoMovimiento>
+        <Monto>50000.00</Monto>
+    </Cuentas>
+    <Cuentas>
+        <Código>0378</Código>
+        <Nombre>DEPOSITO TRABAJO F</Nombre>
+        <Cuenta>000800125940</Cuenta>
+        <TipoMovimiento>CR</TipoMovimiento>
+        <Monto>7000.00</Monto>
+    </Cuentas>
+</AsientoActivos>
